@@ -1,5 +1,7 @@
 ﻿# 🐦 Flappy Bird
 
+> 📚 Developed as a weekly assignment for **YMT-218 Object-Oriented Programming** course.
+
 A Flappy Bird clone built with C# and WinForms as an Object-Oriented Programming course assignment.
 
 ![Gameplay Screenshot](screenshot.png)
