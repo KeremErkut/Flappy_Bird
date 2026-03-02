@@ -7,7 +7,7 @@ namespace Flappy_Bird.Objects
     {
         // Constants
         private const float ScrollSpeed = 160f;
-        private const int PipeWidth = 52;
+        public const int PipeWidth = 52;
         private const int GapSize = 150;
 
         // Top and bottom pipe images
@@ -55,7 +55,7 @@ namespace Flappy_Bird.Objects
         }
 
         // Is bird passed through the gap between the pipes ? (for scoring purposes)
-        public bool MarkAsPassed => IsPassed = true;
+        public void MarkAsPassed() { IsPassed = true; }
 
         // Collision detection
         public Rectangle GetTopBounds()
