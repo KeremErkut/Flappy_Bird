@@ -7,7 +7,7 @@ namespace Flappy_Bird
 {
     public partial class GameForm : Form
     {
-        // --- Oyun boyutları ---
+        // --- Screen dimensions ---
         private const int ScreenWidth = 360;
         private const int ScreenHeight = 512;
 
@@ -15,7 +15,7 @@ namespace Flappy_Bird
         private readonly Timer _gameTimer;
         private DateTime _lastUpdate;
 
-        // --- Yönetici ---
+        // --- Manager ---
         private readonly GameManager _gameManager;
 
         // --- Double Buffering ---
@@ -26,27 +26,27 @@ namespace Flappy_Bird
         {
             InitializeComponent();
 
-            // Pencere ayarları
+            // Screen Settings
             ClientSize = new Size(ScreenWidth, ScreenHeight);
             Text = "Flappy Bird";
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
 
-            // Double buffering kurulumu
+            // Double buffering Setup
             _graphicsContext = BufferedGraphicsManager.Current;
             _bufferedGraphics = _graphicsContext.Allocate(
                 CreateGraphics(),
                 new Rectangle(0, 0, ScreenWidth, ScreenHeight)
             );
 
-            // GameManager başlat
+            // Initialize Game Manager
             _gameManager = new GameManager(ScreenWidth, ScreenHeight);
 
-            // Input — Space veya fare tıklaması
+            // Input — Space or mouse click
             KeyDown += OnKeyDown;
             MouseDown += OnMouseDown;
 
-            // Game loop timer — 60 FPS hedefi
+            // Game loop timer — 60 FPS goal
             _gameTimer = new Timer();
             _gameTimer.Interval = 16; // ~60 FPS (1000ms / 60)
             _gameTimer.Tick += GameLoop;
@@ -56,12 +56,12 @@ namespace Flappy_Bird
 
         private void GameLoop(object sender, EventArgs e)
         {
-            // DeltaTime hesapla
+            // Calculate DeltaTime 
             DateTime now = DateTime.Now;
             float deltaTime = (float)(now - _lastUpdate).TotalSeconds;
             _lastUpdate = now;
 
-            // deltaTime'ı sınırla — pencere taşındığında büyük sıçramalar olmasın
+            // Limit DeltaTime to prevent big jumps (e.g., when debugging or if the game lags)
             if (deltaTime > 0.05f) deltaTime = 0.05f;
 
             // Update
@@ -70,7 +70,7 @@ namespace Flappy_Bird
             // Draw
             _gameManager.Draw(_bufferedGraphics.Graphics);
 
-            // Tamponu ekrana kopyala
+            // Copy the buffered graphics to the screen
             _bufferedGraphics.Render();
         }
 
